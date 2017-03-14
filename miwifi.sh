@@ -21,62 +21,39 @@ echo "6：卸载r3版ss插件"
 echo "0:退出"
 read num
 
-if [ "${num}" == "1" ]
-then
+target_script=""
+src_script=""
+
 cd /tmp
-rm -rf *.sh
-wget https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r2d/r2d_ss.sh
-chmod -R 777 r2d_ss.sh
-./r2d_ss.sh
-fi
-if [ "${num}" == "2" ]
-then
-cd /tmp
-rm -rf *.sh
-wget https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r2d/r2d_uninstall.sh
-chmod -R 777 r2d_uninstall.sh
-./r2d_uninstall.sh
+
+if [ "${num}" == "1" ]; then
+  target_script="r2d_ss.sh"
+  src_script="https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r2d/r2d_ss.sh"
+elif [ "${num}" == "2" ]; then
+  src_script="https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r2d/r2d_uninstall.sh"
+  target_script="r2d_uninstall.sh"
+elif [ "${num}" == "3" ]; then
+  src_script="https://raw.githubusercontent.com/blademainer/miwifi-ss/master/mini/mini_ss.sh"
+  target_script="mini_ss.sh"
+elif [ "${num}" == "4" ]; then
+  src_script="https://raw.githubusercontent.com/blademainer/miwifi-ss/master/mini/mini_uninstall.sh"
+  target_script="mini_uninstall.sh"
+elif [ "${num}" == "5" ]; then
+  src_script="https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r3/r3_ss.sh"
+  target_script="r3_ss.sh"
+elif [ "${num}" == "6" ]; then
+  src_script="https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r3/r3_uninstall.sh"
+  target_script="r3_uninstall.sh"
+elif [ "${num}" == "0" ]; then
+  echo "Exit!"
+  exit
+else
+  echo "Unknown number:"${num}
+  exit
 fi
 
-
-if [ "${num}" == "3" ]
-then
-cd /tmp
-rm -rf *.sh
-wget https://raw.githubusercontent.com/blademainer/miwifi-ss/master/mini/mini_ss.sh
-chmod -R 777 mini_ss.sh
-./mini_ss.sh
-fi
-
-if [ "${num}" == "4" ]
-then
-cd /tmp
-rm -rf *.sh
-wget https://raw.githubusercontent.com/blademainer/miwifi-ss/master/mini/mini_uninstall.sh
-chmod -R 777 mini_uninstall.sh
-sh mini_uninstall.sh
-fi
-
-if [ "${num}" == "5" ]
-then
-cd /tmp
-rm -rf *.sh
-wget https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r3/r3_ss.sh
-chmod -R 777 r3_ss.sh
-./r3_ss.sh
-fi
-
-if [ "${num}" == "6" ]
-then
-cd /tmp
-rm -rf *.sh
-wget https://raw.githubusercontent.com/blademainer/miwifi-ss/master/r3/r3_uninstall.sh
-chmod -R 777 r3_uninstall.sh
-sh r3_uninstall.sh
-fi
-
-if [ "${num}" == "0" ]
-then
-exit
-fi
+rm -rf ${target_script}
+curl ${src_script} > ${target_script}
+chmod -R 777 ${target_script}
+sh ${target_script}
 
